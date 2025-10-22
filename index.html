@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZA Logistics - Giải Pháp Vận Tải Toàn Diện</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Ẩn nút menu mặc định trên desktop */
+      .mobile-menu-toggle {
+        display: none;
+      }
+
+      /* Mobile responsive styles */
+      @media screen and (max-width: 768px) {
+        .container {
+          width: 100%;
+          padding: 0 15px;
+        }
+
+        /* Mobile menu toggle - chỉ hiển thị trên mobile */
+        .mobile-menu-toggle {
+          display: block; /* Sẽ bị ghi đè bởi display: none ở ngoài media query */
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          z-index: 1000;
+          background: none;
+          border: none;
+          font-size: 24px;
+          color: white;
+          cursor: pointer;
+        }
+
+        header nav {
+          position: relative;
+          justify-content: center;
+          padding: 15px 0;
+        }
+
+        .logo {
+          font-size: 1.5rem;
+          text-align: left;
+          padding-left: 15px;
+        }
+
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          flex-direction: column;
+          background: rgba(70, 130, 180, 0.95);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+          z-index: 100;
+        }
+
+        .nav-links.mobile-open {
+          display: flex;
+        }
+
+        .nav-links li {
+          width: 100%;
+          margin: 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-links li a {
+          display: block;
+          padding: 15px 20px;
+          text-align: left;
+        }
+
+        .dropdown {
+          position: relative;
+        }
+
+        .dropdown-menu {
+          position: static;
+          display: none;
+          background: rgba(55, 100, 150, 0.95);
+          box-shadow: none;
+          width: 100%;
+          padding: 0;
+        }
+
+        .dropdown-menu.mobile-open {
+          display: block;
+        }
+
+        .dropdown-menu li a {
+          padding-left: 40px;
+        }
+
+        /* Hero section */
+        .hero {
+          padding: 60px 0 40px;
+        }
+
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+
+        /* Services grid */
+        .services-grid {
+          grid-template-columns: 1fr;
+        }
+
+        /* About section */
+        .about-content {
+          flex-direction: column;
+        }
+
+        .about-text,
+        .about-image {
+          width: 100%;
+        }
+
+        .stats {
+          flex-wrap: wrap;
+        }
+
+        .stat-item {
+          width: 50%;
+          margin-bottom: 20px;
+        }
+
+        /* Contact section */
+        .contact-content {
+          flex-direction: column;
+        }
+
+        .contact-info,
+        .contact-form {
+          width: 100%;
+          margin: 0 0 30px 0;
+        }
+
+        /* Modal */
+        .modal-content {
+          width: 90%;
+        }
+      }
+
+      /* User Menu Styles for Landing Page */
+      .user-menu-landing {
+        position: relative;
+        margin-left: auto;
+        margin-right: 20px;
+      }
+
+      .user-trigger-landing {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: inherit;
+        font-size: 14px;
+        color: white;
+        backdrop-filter: blur(10px);
+      }
+
+      .user-trigger-landing:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .user-icon {
+        width: 20px;
+        height: 20px;
+        color: white;
+        stroke-width: 2;
+      }
+
+      .user-name-landing {
+        font-weight: 600;
+        color: white;
+      }
+
+      .user-dropdown-landing {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        min-width: 260px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+      }
+
+      .user-dropdown-landing.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .user-info-landing {
+        padding: 20px;
+        border-bottom: 1px solid #e0e0e0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px 12px 0 0;
+      }
+
+      .user-full-name-landing {
+        font-weight: 700;
+        font-size: 16px;
+        color: white;
+        margin-bottom: 4px;
+      }
+
+      .user-email-landing {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .dropdown-divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: 0;
+      }
+
+      .dropdown-item-landing {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 14px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 14px;
+        color: #333;
+        text-align: left;
+        transition: background 0.2s;
+      }
+
+      .dropdown-item-landing:hover {
+        background: #f5f5f5;
+      }
+
+      .dropdown-item-landing svg {
+        width: 20px;
+        height: 20px;
+        stroke-width: 2;
+        color: #666;
+      }
+
+      .dropdown-item-landing:last-child {
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+        color: #e74c3c;
+      }
+
+      .dropdown-item-landing:last-child svg {
+        color: #e74c3c;
+      }
+
+      @media screen and (max-width: 768px) {
+        .user-menu-landing {
+          position: absolute;
+          right: 60px;
+          top: 15px;
+        }
+
+        .user-name-landing {
+          display: none;
+        }
+
+        .user-dropdown-landing {
+          right: -10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="container">
+        <div class="logo">
+          <img
+            src="logo.jpg"
+            alt="ZA Logistics"
+            style="
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              margin-right: 10px;
+              vertical-align: middle;
+            "
+          />
+        </div>
+        <!-- Mobile menu toggle button -->
+        <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+        
+        <!-- User Menu (shown when logged in) -->
+        <div class="user-menu-landing" id="userMenuLanding" style="display: none;">
+          <button class="user-trigger-landing" id="userTriggerLanding">
+            <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            <span class="user-name-landing" id="userNameLanding">User</span>
+          </button>
+          
+          <div class="user-dropdown-landing" id="userDropdownLanding">
+            <div class="user-info-landing">
+              <div class="user-full-name-landing" id="userFullNameLanding">Loading...</div>
+              <div class="user-email-landing" id="userEmailLanding"></div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item-landing" onclick="goToApp()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Vào ứng dụng
+            </button>
+            <button class="dropdown-item-landing" onclick="changePasswordLanding()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+              </svg>
+              Đổi mật khẩu
+            </button>
+            <button class="dropdown-item-landing" onclick="logoutLanding()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Đăng xuất
+            </button>
+          </div>
+        </div>
+        
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Trang Chủ</a></li>
+          <li><a href="#services">Dịch Vụ</a></li>
+          <li><a href="#about">Về Chúng Tôi</a></li>
+          <li><a href="#contact">Liên Hệ</a></li>
+          <li class="dropdown">
+            <a href="#" id="adminDropdownToggle">Admin ▼</a>
+            <ul class="dropdown-menu" id="adminDropdown">
+              <li>
+                <a href="#" onclick="openLoginModal('nhanvien'); return false;"
+                  >Nhân viên</a
+                >
+              </li>
+              <li>
+                <a href="#" onclick="openLoginModal('quanly'); return false;"
+                  >Quản lý</a
+                >
+              </li>
+              <li>
+                <a href="#" onclick="openLoginModal('admin'); return false;"
+                  >Admin</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="home" class="hero">
+      <div class="container">
+        <div class="hero-content fade-in">
+          <h1>Za Logistics</h1>
+          <p>
+            Giải pháp vận tải và logistics toàn diện, đáng tin cậy cho doanh
+            nghiệp của bạn. Chúng tôi cam kết mang đến dịch vụ chất lượng cao
+            với chi phí hợp lý.
+          </p>
+          <a href="#contact" class="cta-button">Liên Hệ Ngay</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="services">
+      <div class="container">
+        <h2 class="section-title">Dịch Vụ Của Chúng Tôi</h2>
+        <div class="services-grid">
+          <div class="service-card fade-in">
+            <div class="service-icon">🚛</div>
+            <h3>Vận Tải Hàng Hóa</h3>
+            <p>
+              Dịch vụ vận chuyển hàng hóa an toàn, nhanh chóng trên toàn quốc
+              với đội xe hiện đại và đội ngũ tài xế kinh nghiệm.
+            </p>
+          </div>
+          <div class="service-card fade-in">
+            <div class="service-icon">📦</div>
+            <h3>Kho Bãi & Lưu Trữ</h3>
+            <p>Hệ thống kho bãi.</p>
+          </div>
+          <div class="service-card fade-in">
+            <div class="service-icon">🌐</div>
+            <h3>Logistics Tích Hợp</h3>
+            <p>
+              Giải pháp logistics toàn diện từ nhập khẩu, xuất khẩu đến phân
+              phối, giúp tối ưu hóa chuỗi cung ứng.
+            </p>
+          </div>
+          <div class="service-card fade-in">
+            <div class="service-icon">📊</div>
+            <h3>Quản Lý Chuỗi Cung Ứng</h3>
+            <p>
+              Hỗ trợ quản lý và tối ưu hóa chuỗi cung ứng với công nghệ tracking
+              hiện đại.
+            </p>
+          </div>
+          <div class="service-card fade-in">
+            <div class="service-icon">✈️</div>
+            <h3>Vận Chuyển Đa Phương Thức</h3>
+            <p>
+              Dịch vụ vận chuyển hàng hóa quốc tế qua đường hàng không, đường
+              biển với thủ tục nhanh gọn.
+            </p>
+          </div>
+          <div class="service-card fade-in">
+            <div class="service-icon">🚚</div>
+            <h3>Giao Hàng Cuối Cùng</h3>
+            <p>
+              Dịch vụ giao hàng tận nơi với thời gian linh hoạt, đảm bảo hàng
+              hóa đến tay khách hàng an toàn.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text fade-in">
+            <h2>Về ZA Logistics</h2>
+            <p>
+              ZA Logistics là công ty hàng đầu trong lĩnh vực vận tải và
+              logistics tại Việt Nam. Với hơn 10 năm kinh nghiệm, chúng tôi tự
+              hào là đối tác tin cậy của hàng nghìn doanh nghiệp.
+            </p>
+            <p>
+              Chúng tôi cam kết mang đến những giải pháp logistics tối ưu, giúp
+              khách hàng tiết kiệm chi phí và nâng cao hiệu quả kinh doanh.
+            </p>
+            <div class="stats">
+              <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div>Khách Hàng</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div>Thành Phố</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div>Xe Vận Tải</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div>Hỗ Trợ</div>
+              </div>
+            </div>
+          </div>
+          <div class="about-image fade-in">🚢</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 class="section-title">Liên Hệ Với Chúng Tôi</h2>
+        <div class="contact-content">
+          <div class="contact-info fade-in">
+            <h3>Thông Tin Liên Hệ</h3>
+            <div class="contact-item">
+              <i>📍</i>
+              <div>
+                <strong>Địa chỉ:</strong><br />
+                Dĩ An, TP.HCM
+              </div>
+            </div>
+            <div class="contact-item">
+              <i>📞</i>
+              <div>
+                <strong>Điện thoại:</strong><br />
+                (+84) 983 62 16 18<br />
+                (+84) 903 39 70 35
+              </div>
+            </div>
+            <div class="contact-item">
+              <i>📧</i>
+              <div>
+                <strong>Email:</strong><br />
+                zavietnam@outlook.com
+              </div>
+            </div>
+            <div class="contact-item">
+              <i>🕖</i>
+              <div>
+                <strong>Giờ làm việc:</strong><br />
+                T2-T6: 8:00 - 17:30<br />
+                T7: 8:00 - 12:00
+              </div>
+            </div>
+          </div>
+          <form class="contact-form fade-in">
+            <h3>Gửi Tin Nhắn</h3>
+            <div class="form-group">
+              <label for="name">Họ và Tên</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Số Điện Thoại</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            <div class="form-group">
+              <label for="message">Tin Nhắn</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Gửi Tin Nhắn</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 ZA Logistics. Tất cả quyền được bảo lưu.</p>
+      </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">Đăng Nhập</h2>
+          <span class="close" onclick="closeLoginModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label for="username">Tên đăng nhập:</label>
+              <input type="text" id="username" name="username" required />
+            </div>
+            <div class="form-group">
+              <label for="password">Mật khẩu:</label>
+              <input type="password" id="password" name="password" required />
+            </div>
+            <button type="submit" class="login-btn">Đăng Nhập</button>
+            <div id="errorMessage" class="error-message">
+              Tên đăng nhập hoặc mật khẩu không đúng!
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // User credentials configuration
+      const userCredentials = {
+        nhanvien: {
+          username: "nhanvien",
+          password: "123",
+          redirectUrl: "src/chamcong/index2.html",
+          title: "Đăng Nhập Nhân Viên",
+        },
+        quanly: {
+          username: "quanly",
+          password: "123",
+          redirectUrl: "/public/index.html",
+          title: "Đăng Nhập Quản Lý",
+        },
+        admin: {
+          username: "admin",
+          password: "123",
+          redirectUrl: "/src/index.html",
+          title: "Đăng Nhập Admin",
+        },
+      };
+
+      let currentRole = "";
+
+      // Mobile menu functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+        const navLinks = document.getElementById("navLinks");
+        const adminDropdownToggle = document.getElementById(
+          "adminDropdownToggle"
+        );
+        const adminDropdown = document.getElementById("adminDropdown");
+
+        // Toggle mobile menu
+        mobileMenuToggle.addEventListener("click", function () {
+          navLinks.classList.toggle("mobile-open");
+        });
+
+        // Toggle admin dropdown on mobile
+        adminDropdownToggle.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (window.innerWidth <= 768) {
+            adminDropdown.classList.toggle("mobile-open");
+          }
+        });
+
+        // Close menu when clicking on navigation links
+        navLinks.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", function () {
+            if (
+              window.innerWidth <= 768 &&
+              !this.id.includes("adminDropdownToggle")
+            ) {
+              navLinks.classList.remove("mobile-open");
+            }
+          });
+        });
+
+        // Close dropdown when clicking elsewhere
+        document.addEventListener("click", function (e) {
+          if (!e.target.closest(".dropdown") && window.innerWidth > 768) {
+            adminDropdown.classList.remove("mobile-open");
+          }
+        });
+      });
+
+      // Open login modal
+      function openLoginModal(role) {
+        currentRole = role;
+        const modal = document.getElementById("loginModal");
+        const modalTitle = document.getElementById("modalTitle");
+        modalTitle.textContent = userCredentials[role].title;
+        modal.style.display = "block";
+
+        // Close mobile menu and dropdown
+        document.getElementById("navLinks").classList.remove("mobile-open");
+        document
+          .getElementById("adminDropdown")
+          .classList.remove("mobile-open");
+
+        // Reset form
+        document.getElementById("loginForm").reset();
+        document.getElementById("errorMessage").style.display = "none";
+      }
+
+      // Close login modal
+      function closeLoginModal() {
+        const modal = document.getElementById("loginModal");
+        modal.style.display = "none";
+        currentRole = "";
+      }
+
+      // Handle login - Call API
+      async function handleLogin(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const errorMessage = document.getElementById("errorMessage");
+        const loginBtn = event.target.querySelector(".login-btn");
+
+        // Disable button and show loading
+        loginBtn.disabled = true;
+        loginBtn.textContent = "Đang đăng nhập...";
+        errorMessage.style.display = "none";
+
+        try {
+          console.log('[Login] Calling /api/auth/login...');
+          
+          // Call authentication API
+          const response = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+
+          const data = await response.json();
+          console.log('[Login] Response:', data);
+
+          if (response.ok && data.success) {
+            // Login successful - store tokens
+            console.log('[Login] ✓ Login successful');
+            localStorage.setItem("accessToken", data.data.accessToken);
+            localStorage.setItem("refreshToken", data.data.refreshToken);
+            localStorage.setItem("user", JSON.stringify(data.data.user));
+            
+            console.log('[Login] ✓ Tokens saved to localStorage');
+
+            // Success message
+            errorMessage.textContent = "Đăng nhập thành công! Đang chuyển trang...";
+            errorMessage.style.color = "#10b981";
+            errorMessage.style.display = "block";
+
+            // Get redirect URL based on role
+            const user = data.data.user;
+            let redirectUrl = "/public/index.html"; // Default
+            
+            if (user.role === "admin") {
+              redirectUrl = "/public/index.html";
+            } else if (user.role === "manager") {
+              redirectUrl = "/public/index.html";
+            } else {
+              redirectUrl = "/public/chamcong/index2.html";
+            }
+
+            console.log('[Login] Redirecting to:', redirectUrl);
+
+            // Redirect after short delay
+            setTimeout(() => {
+              window.location.href = redirectUrl;
+            }, 1000);
+          } else {
+            // Login failed - show error
+            throw new Error(data.message || "Đăng nhập thất bại");
+          }
+        } catch (error) {
+          console.error("[Login] Error:", error);
+          errorMessage.textContent = error.message || "Tên đăng nhập hoặc mật khẩu không đúng!";
+          errorMessage.style.color = "#e74c3c";
+          errorMessage.style.display = "block";
+        } finally {
+          // Re-enable button
+          loginBtn.disabled = false;
+          loginBtn.textContent = "Đăng Nhập";
+        }
+      }
+
+      // Close modal when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("loginModal");
+        if (event.target == modal) {
+          closeLoginModal();
+        }
+      };
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          if (this.getAttribute("href") === "#") return;
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Form submission
+      document
+        .querySelector(".contact-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert(
+            "Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể."
+          );
+          this.reset();
+        });
+
+      // Add fade-in animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver(function (entries) {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".fade-in").forEach((el) => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(30px)";
+        el.style.transition = "all 0.8s ease-out";
+        observer.observe(el);
+      });
+
+      // Header scroll effect
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        if (window.scrollY > 100) {
+          header.style.background = "rgba(135, 206, 235, 0.95)";
+          header.style.backdropFilter = "blur(10px)";
+        } else {
+          header.style.background = "linear-gradient(135deg, #87CEEB, #4682B4)";
+          header.style.backdropFilter = "none";
+        }
+      });
+
+      // ============================================================================
+      // AUTHENTICATION HELPER FUNCTIONS
+      // ============================================================================
+
+      /**
+       * Get stored access token
+       */
+      function getAccessToken() {
+        return localStorage.getItem("accessToken");
+      }
+
+      /**
+       * Get stored user info
+       */
+      function getCurrentUser() {
+        const userStr = localStorage.getItem("user");
+        try {
+          return userStr ? JSON.parse(userStr) : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      /**
+       * Check if user is authenticated
+       */
+      function isAuthenticated() {
+        return !!getAccessToken() && !!getCurrentUser();
+      }
+
+      /**
+       * Logout user
+       */
+      async function logout() {
+        const token = getAccessToken();
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        // Call logout API
+        if (token && refreshToken) {
+          try {
+            await fetch("/api/auth/logout", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ refreshToken }),
+            });
+          } catch (error) {
+            console.error("Logout error:", error);
+          }
+        }
+
+        // Clear stored data
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("user");
+
+        // Redirect to home
+        window.location.href = "/";
+      }
+
+      // ============================================================================
+      // USER MENU FUNCTIONS FOR LANDING PAGE
+      // ============================================================================
+
+      function goToApp() {
+        const user = getCurrentUser();
+        if (user) {
+          // Redirect based on role
+          if (user.role === 'admin' || user.role === 'manager') {
+            window.location.href = '/public/index.html';
+          } else {
+            window.location.href = '/public/chamcong/index2.html';
+          }
+        }
+      }
+
+      function changePasswordLanding() {
+        alert('Chức năng đổi mật khẩu đang được phát triển!');
+      }
+
+      function logoutLanding() {
+        if (confirm('Bạn có chắc muốn đăng xuất?')) {
+          logout();
+        }
+      }
+
+      // Display user menu if logged in
+      window.addEventListener("DOMContentLoaded", function () {
+        const user = getCurrentUser();
+        console.log('[Landing] Checking authentication...', user);
+        
+        if (user && isAuthenticated()) {
+          console.log("[Landing] ✓ User logged in:", user.username, "(" + user.role + ")");
+
+          // Show user menu
+          const userMenuLanding = document.getElementById('userMenuLanding');
+          const userNameLanding = document.getElementById('userNameLanding');
+          const userFullNameLanding = document.getElementById('userFullNameLanding');
+          const userEmailLanding = document.getElementById('userEmailLanding');
+
+          if (userMenuLanding) {
+            // Update user info
+            if (userNameLanding) userNameLanding.textContent = user.fullName || user.username;
+            if (userFullNameLanding) userFullNameLanding.textContent = user.fullName || user.username;
+            if (userEmailLanding) userEmailLanding.textContent = user.email || '';
+
+            // Show the menu
+            userMenuLanding.style.display = 'block';
+
+            // Setup dropdown toggle
+            const userTriggerLanding = document.getElementById('userTriggerLanding');
+            const userDropdownLanding = document.getElementById('userDropdownLanding');
+
+            if (userTriggerLanding && userDropdownLanding) {
+              console.log('[Landing] Setting up user menu dropdown...');
+
+              userTriggerLanding.addEventListener('click', function(e) {
+                console.log('[Landing] User menu clicked');
+                e.preventDefault();
+                e.stopPropagation();
+                userDropdownLanding.classList.toggle('show');
+              });
+
+              // Click outside to close
+              document.addEventListener('click', function(e) {
+                if (!userMenuLanding.contains(e.target)) {
+                  userDropdownLanding.classList.remove('show');
+                }
+              });
+
+              // Prevent dropdown from closing when clicking inside
+              userDropdownLanding.addEventListener('click', function(e) {
+                e.stopPropagation();
+              });
+
+              console.log('[Landing] ✓ User menu dropdown setup complete');
+            }
+
+            // Hide Admin dropdown from nav-links if user is logged in
+            const adminDropdownToggle = document.getElementById('adminDropdownToggle');
+            if (adminDropdownToggle) {
+              const adminLi = adminDropdownToggle.closest('li');
+              if (adminLi) {
+                adminLi.style.display = 'none';
+              }
+            }
+          }
+        } else {
+          console.log('[Landing] No user logged in or token expired');
+        }
+      });
+    </script>
+  </body>
+</html>
