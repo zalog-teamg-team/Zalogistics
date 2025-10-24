@@ -1,0 +1,17 @@
+{
+  "headers": [
+    "Ngày",
+    "Mã NV",
+    "Tên nhân viên",
+    "Ca",
+    "Số xe",
+    "Chức vụ",
+    "Giờ vào",
+    "Giờ ra",
+    "Ghi chú",
+    "Vị trí",
+    "Trạng thái",
+    "#"
+  ],
+  "data": []
+}

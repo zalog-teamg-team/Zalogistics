@@ -1,0 +1,21 @@
+{
+  "headers": [
+    "id Chuyến",
+    "Ngày",
+    "Khách hàng",
+    "Số lượng",
+    "Ca",
+    "Số xe",
+    "Tên tài xế",
+    "Tên Phụ xe",
+    "Note",
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "#5",
+    "Mã NV (tx)",
+    "Mã NV (px)"
+  ],
+  "data": []
+}

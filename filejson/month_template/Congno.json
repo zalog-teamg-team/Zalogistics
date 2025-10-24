@@ -1,0 +1,14 @@
+{
+  "headers": [
+    "Ngày",
+    "Tài xế",
+    "Biển số",
+    "Tuyến đường",
+    "Km bắt đầu",
+    "Km kết thúc",
+    "Tổng km",
+    "Trạng thái",
+    "Ghi chú"
+  ],
+  "data": []
+}

@@ -1,0 +1,28 @@
+{
+  "headers": [
+    "Mã NV",
+    "Tên nhân viên",
+    "Chức vụ",
+    "BHXH",
+    "LCB BHXH",
+    "Lương TG",
+    "TCa",
+    "CN",
+    "#1",
+    "#2",
+    "#3",
+    "#4",
+    "TC",
+    "Ghép",
+    "Tổng cộng",
+    "Hiệu xuất",
+    "Phụ cấp",
+    "Thưởng",
+    "Phạt",
+    "Tổng Cộng",
+    "Tạm ứng",
+    "Thực lãnh",
+    "Ghi chú"
+  ],
+  "data": []
+}
