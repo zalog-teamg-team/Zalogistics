@@ -48,13 +48,13 @@ app.use(corsMiddleware);
 // ============================================================================
 
 // Serve static files from public directory first (for auth.js, etc.)
-// app.use(
-//   express.static(config.paths.publicDir, {
-//     index: false,
-//     etag: true,
-//     maxAge: config.cache.maxAge,
-//   })
-// );
+app.use(
+  express.static(config.paths.publicDir, {
+    index: false,
+    etag: true,
+    maxAge: config.cache.maxAge,
+  })
+);
 
 // Serve static files from root directory (for backward compatibility)
 app.use(
