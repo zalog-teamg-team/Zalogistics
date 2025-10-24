@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chấm công - ZA Logistics Việt Nam</title>
+  <link rel="stylesheet" href="chamcong.css">
+  <link rel="manifest" href="chamcong.webmanifest">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="header-content">
+      <div class="logo"><img src="za2.jpg" class="logo-img" alt="ZA Logistics"></div>
+      <div class="header-right">
+        <span id="currentTime" class="badge"></span>
+        <span id="locationStatus" class="badge">Đang lấy vị trí…</span>
+      </div>
+    </div>
+    <!-- DÒNG TRẠNG THÁI (được data.js cập nhật) -->
+    <div id="loadStatus" class="status">Đang khởi tạo…</div>
+  </header>
+
+  <main class="main-card">
+    <form id="attendanceForm" autocomplete="off">
+      <div class="form-rows">
+
+        <!-- Hàng 1: Mã NV + Họ tên -->
+        <div class="row two">
+          <div class="form-group">
+            <label for="maNV">Mã NV <span style="color:#dc2626">*</span></label>
+            <div class="control">
+              <input id="maNV" list="dsMaNV" placeholder="Nhập hoặc chọn Mã NV">
+              <datalist id="dsMaNV"></datalist>
+            </div>
+            <div class="form-hint">Gõ để lọc nhanh danh sách</div>
+          </div>
+          <div class="form-group">
+            <label for="tenNV">Họ tên <span style="color:#dc2626">*</span></label>
+            <div class="control">
+              <input id="tenNV" placeholder="Tự điền khi chọn Mã NV hoặc nhập tay">
+            </div>
+            <div id="tenStatus" class="form-hint"></div>
+          </div>
+        </div>
+
+        <!-- Hàng 2: Chức vụ + Số xe -->
+        <div class="row two">
+          <div class="form-group">
+            <label for="chucVu">Chức vụ</label>
+            <div class="control">
+              <input id="chucVu" placeholder="Tự điền (nếu có)">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="soXe">Số xe</label>
+            <div class="control">
+              <input id="soXe" list="dsSoXe" placeholder="Nhập/Chọn số xe">
+              <datalist id="dsSoXe"></datalist>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hàng 3: Ca + # + Ghi chú -->
+        <div class="row three">
+          <div class="form-group ca-inline">
+            <label for="ca">Ca <span style="color:#dc2626">*</span></label>
+            <div class="control">
+              <select id="ca">
+                <option value="">-- Chọn ca --</option>
+                <option value="Ngày">Ngày</option>
+                <option value="Đêm">Đêm</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group hash-inline">
+            <label for="hash">#</label>
+            <div class="control">
+              <input id="hash" placeholder="VD: QR/tem/ghi chú #">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="ghiChu">Ghi chú</label>
+            <div class="control">
+              <input id="ghiChu" placeholder="Ghi chú (nếu có)">
+            </div>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button type="button" id="btnIn"  class="btn-checkin">✅ Check-in</button>
+          <button type="button" id="btnOut" class="btn-checkout">🚪 Check-out</button>
+        </div>
+
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    <div>Phiên bản: <strong>3.1</strong> • Lưu trạng thái theo Mã NV • Check-out khớp 100%</div>
+  </footer>
+</div>
+
+<script src="config.js"></script>
+<script src="url.js"></script>
+<script src="data.js"></script>
+<script src="chamcong.js"></script>
+<script>
+(function(){
+  function tick(){
+    var d = new Date();
+    var time = [String(d.getHours()).padStart(2,'0'),
+                String(d.getMinutes()).padStart(2,'0'),
+                String(d.getSeconds()).padStart(2,'0')].join(':');
+    var date = String(d.getDate()).padStart(2,'0') + '/' +
+               String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+    var el = document.getElementById('currentTime');
+    if (el) el.textContent = date + ' ' + time;
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
+
+<!-- Toast container (nếu quên khai báo, JS sẽ tự tạo) -->
+<div id="toastStack" class="toast-stack" aria-live="polite"></div>
+</body>
+</html>
