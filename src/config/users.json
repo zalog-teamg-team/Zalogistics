@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "fullName": "Administrator",
+      "role": "admin",
+      "email": "admin@logistics.local",
+      "active": true,
+      "createdAt": "2025-01-20T00:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "username": "manager",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "fullName": "Manager User",
+      "role": "manager",
+      "email": "manager@logistics.local",
+      "active": true,
+      "createdAt": "2025-01-20T00:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "username": "user",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "fullName": "Regular User",
+      "role": "user",
+      "email": "user@logistics.local",
+      "active": true,
+      "createdAt": "2025-01-20T00:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "username": "nhanvien",
+      "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+      "fullName": "Nhân viên",
+      "role": "user",
+      "email": "nhanvien@logistics.local",
+      "active": true,
+      "createdAt": "2025-10-01T00:00:00.000Z"
+    }
+  ]
+}
