@@ -1,0 +1,11 @@
+{
+  "name": "Chấm công - ZA Logistics",
+  "short_name": "Chấm công ZA",
+  "start_url": "index2.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "icon512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
