@@ -239,7 +239,7 @@
   <script type="module" src="./auth.js?v=2"></script>
   <script type="module">
     // Check authentication before loading app
-    import auth from '/auth.js';
+    import auth from './auth.js';
     
     if (!auth.requireAuth()) {
       // Will redirect to login if not authenticated
